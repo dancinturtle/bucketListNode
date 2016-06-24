@@ -1,0 +1,49 @@
+<div ng-controller="DashboardController">
+
+  <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#/profile">BucketList</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#/dashboard">Home</a></li>
+      <li><a href="#/">Logout</a></li>
+    </ul>
+  </div>
+</nav>
+<h2>Welcome, <span ng-bind="currentUser.name"></span></h2>
+<hr />
+<form role="form" class="form-inline">
+    <div class="form-group">
+      <input type="text" class="form-control" name="title" ng-model="newItem.title" placeholder="Title" />
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" name="description" ng-model="newItem.description" placeholder="Description" />
+    </div>
+    <div class="form-group">
+      <select ng-model="newItem.createdFor" ng-options="user.name for user in users">
+      </select>
+    </div>
+    <button class="btn btn-success" ng-click="addItem()">Add to List</button>
+</form>
+  <br />
+  <h3>Before I die I want to...</h3>
+  <form role="form">
+    <div class="form-group" ng-repeat="bucket in buckets">
+      <input type="checkbox" ng-click="changeStatus(bucket._id, bucket.completed)"/>
+      <p>
+        <span ng-bind="bucket.name"></span> - <span ng-bind="bucket.title"></span> - <span ng-bind="bucket.description"></span> - <span ng-bind="bucket.createdAt"></span>.
+      </p>
+
+    </div>
+
+  </form>
+
+  <div>
+    <h3>List of other users (Click to view profile):</h3>
+      <p ng-repeat="user in users">
+        <a href="#/profile/{{user.name}}" ng-bind="user.name"></a>
+      </p>
+
+  </div>
+</div>

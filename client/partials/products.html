@@ -1,0 +1,44 @@
+
+<div ng-controller="ProductsController">
+
+
+  <h2>PRODUCTS</h2>
+  <!-- <div class="row">
+    <div class="col-md-2">
+      <br />
+      <br />
+      <form>
+        <input type='text' placeholder='search...' ng-model="searchProducts.name" />
+        <br />
+        <button>Filter</button>
+      </form>
+      <h5>Add a new product</h5>
+      <p class="orange" ng-if="message" ng-bind="message"></p>
+      <form role="form">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type='text' placeholder='name...' class="form-control" name='name' ng-model="newProduct.name"/>
+        </div>
+        <div class="form-group">
+          <label for="url">Image (url):</label>
+          <input type='text' placeholder='http://' class="form-control" name="url" ng-model="newProduct.url"/>
+        </div>
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <textarea class="form-control" rows="5" name="description" ng-model="newProduct.description"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="quantity">Initial quantity:</label>
+          <select name="quantity" ng-options="q for q in initialQuantity" ng-model="newProduct.quantity">
+            <option ng-bind="q"></option>
+          </select>
+        </div>
+        <button ng-click='addProduct()'>Create</button>
+      </form>
+
+
+
+
+
+  <!-- </div> -->
+</div>
