@@ -2,17 +2,9 @@ beltExam.controller('ProfileController', function($scope, BucketFactory, UserFac
   console.log("Route params!!!!!", $routeParams);
 
 
-
-  UserFactory.shareUser(function(data){
-    $scope.currentUser = data;
-  })
-  UserFactory.findUserforProfile($routeParams.name, function(data){
-    $scope.viewedUser = data;
-    $scope.viewedUser = $scope.viewedUser[0];
-    console.log("THE user to VIEW", $scope.viewedUser);
-  });
-
   $scope.getUserBuckets = function(){
+    // console.log("current user on profile page", $scope.currentUser.name);
+    // console.log("viewed user on profile page", $scope.viewedUser.name);
     $scope.othercompletedBuckets = [];
     $scope.otherpendingBuckets = [];
     $scope.ourcompletedBuckets = [];
@@ -34,9 +26,26 @@ beltExam.controller('ProfileController', function($scope, BucketFactory, UserFac
           $scope.otherpendingBuckets.push($scope.buckets[i]);
         }
       }
+      console.log("our completed", $scope.ourcompletedBuckets, "other completed", $scope.othercompletedBuckets, "our pending", $scope.ourpendingBuckets, "other pending", $scope.otherpendingBuckets);
     })
   }
-  $scope.getUserBuckets();
+
+
+  UserFactory.shareUser(function(data){
+    $scope.currentUser = data;
+
+    $scope.currentUser = $scope.currentUser[0];
+    console.log("The current user on profile page", $scope.currentUser)
+  })
+
+  UserFactory.findUserforProfile($routeParams.name, function(data){
+    $scope.viewedUser = data;
+    $scope.viewedUser = $scope.viewedUser[0];
+    console.log("THE user to VIEW", $scope.viewedUser, $scope.currentUser);
+    $scope.getUserBuckets();
+  });
+
+
 
   $scope.changeStatus = function(id, status){
     var updatingBucket = {id: id, status: status};
