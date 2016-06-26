@@ -7,83 +7,66 @@ beltExam.controller('DashboardController', function($scope, UserFactory, BucketF
     }
     else {
       $scope.currentUser = data[0];
-      console.log("our current user", $scope.currentUser.name);
+      console.log("our current user on dashboard", $scope.currentUser);
     }
   })
 
-  UserFactory.index(function(data){
-    $scope.users = data;
-  })
 
-  BucketFactory.index(function(data){
-    $scope.buckets = data;
-    console.log("ALL THE BUCKETS", $scope.buckets);
-  })
+  if($scope.currentUser){
+    UserFactory.index(function(data){
+      $scope.users = data;
+      $scope.otherUsers = [];
+      for(var i=0; i<$scope.users.length; i++){
+        if($scope.users[i].name != $scope.currentUser.name){
+          $scope.otherUsers.push($scope.users[i]);
+        }
+      }
+    })//closes UserFactory.index
+  }
+
+  $scope.getUserBuckets = function(){
+    BucketFactory.userBuckets($scope.currentUser.name, function(data){
+      $scope.buckets = data;
+      $scope.completedbuckets = [];
+      $scope.pendingbuckets = [];
+      for(var i=0; i<$scope.buckets.length; i++){
+        if($scope.buckets[i].completed == true){
+          $scope.completedbuckets.push($scope.buckets[i]);
+        }
+        else {
+          $scope.pendingbuckets.push($scope.buckets[i]);
+        }
+      }
+    })
+  }
+
+  if($scope.currentUser){
+    $scope.getUserBuckets();
+  }
+
+
 
   $scope.addItem = function(){
-    $scope.newItem.user = $scope.currentUser;
+    $scope.newItem.createdBy = $scope.currentUser.name;
+    if($scope.newItem.createdFor){
+      $scope.newItem.createdFor = $scope.newItem.createdFor.name;
+    }
     $scope.newItem.completed = false;
-    console.log("New bucket list item to create for self", $scope.newItem);
-    BucketFactory.createForSelf($scope.newItem, function(data){
+    console.log("latest new Item", $scope.newItem);
+    BucketFactory.addBucket($scope.newItem, function(data){
       console.log(data);
     })
-    if($scope.newItem.createdFor && $scope.newItem.createdFor.name != $scope.currentUser.name){
-      console.log("new bucket list item to create for someone else", $scope.newItem);
-      BucketFactory.createForOther($scope.newItem, function(data){
-        console.log(data);
-      })
-    }
+    $scope.getUserBuckets();
   }
+
+
   $scope.changeStatus = function(id, status){
     var updatingBucket = {id: id, status: status};
     console.log("Changing the status", updatingBucket);
-    // BucketFactory.updateBucket(id, function(data){
-    //   $scope.foundBucket = data;
-    //   $scope.foundBucket = data[0];
-    //   console.log($scope.foundBucket);
-    //   $scope.foundBucket.completed = true;  //update the bucket
-    //
-    // })
+    BucketFactory.updateBucket(updatingBucket, function(data){
+      console.log(data);
+    })
+    $scope.getUserBuckets();
+  }//closes changeStatus
 
-  }
-
-  //   $scope.message = false;
-  //   BucketFactory.create($scope.newItem, function(data){
-  //     $scope.message = data;
-  //   });
-  //   CustomerFactory.index(function(data){
-  //     $scope.customers = data;
-  //     for(var i=0; i<$scope.customers.length; i++){
-  //       var date = new Date($scope.customers[i].createdAt);
-  //       $scope.customers[i].createdAt = date.toDateString();
-  //     }
-  //
-  //
-  //   })
-  //   $scope.newCustomer = {};
-
-
-
-  // CustomerFactory.index(function(data){
-  //   $scope.customers = data;
-  //   for(var i=0; i<$scope.customers.length; i++){
-  //     var date = new Date($scope.customers[i].createdAt);
-  //     $scope.customers[i].createdAt = date.toDateString();
-  //   }
-  // })
-  // $scope.removeCustomer = function(customer){
-  //
-  //   $scope.message = false;
-  //   CustomerFactory.delete(customer._id, function(data){
-  //     $scope.message = data;
-  //   });
-  //   CustomerFactory.index(function(data){
-  //     $scope.customers = data;
-  //     for(var i=0; i<$scope.customers.length; i++){
-  //       var date = new Date($scope.customers[i].createdAt);
-  //       $scope.customers[i].createdAt = date.toDateString();
-  //     }
-  //   })
-  // }
-  //
-})//closes CustomersController
+})//closes dashboardController

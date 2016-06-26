@@ -11,12 +11,6 @@ beltExam.config(function($routeProvider) {
   .when('/profile/:name', {
     templateUrl: 'partials/profile.html'
   })
-  .when('/customers', {
-    templateUrl: 'partials/customers.html'
-  })
-  .when('/settings', {
-    templateUrl: 'partials/settings.html'
-  })
   .otherwise({
     redirectTo: '/'
   });

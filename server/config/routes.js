@@ -8,13 +8,12 @@ module.exports = function(app){
     var name = req.params.name;
   	users.findUser(name, req, res)
   });
-  app.post('/updateBucket', function(req, res){
+  app.put('/updateBucket', function(req, res){
     buckets.update(req, res);
   })
   app.get('/findUserforProfile/:name', function(req, res){
     console.log("routes", req.params.name);
-    var name = req.params.name;
-    users.findUserforProfile(name, req, res)
+    users.findUserforProfile(req, res)
   });
 
   app.post('/adduser', function(req, res){
@@ -25,16 +24,13 @@ module.exports = function(app){
     users.index(req, res)
   })
 
-  app.post('/addItemForSelf', function(req, res){
-    buckets.createForSelf(req, res);
+  app.post('/addBucket', function(req, res){
+    buckets.create(req, res);
   })
 
-  app.post('/addItemForOther', function(req, res){
-    buckets.createForOther(req, res);
-  })
 
-  app.get('/buckets', function(req, res){
-    buckets.index(req, res);
+  app.get('/buckets/:name', function(req, res){
+    buckets.userbuckets(req, res);
   })
   //
   // app.post('/addcustomers', function(req, res){

@@ -16,68 +16,37 @@
   <h2><span ng-bind="viewedUser.name"></span>'s Bucket List</h2>
   <h3>Done</h3>
   <form role="form">
-    <div class="form-group" ng-repeat="bucket in completedBuckets">
+    <div class="form-group" ng-repeat="bucket in othercompletedBuckets">
+      <input type="checkbox" checked disabled/>
+      <p>
+        <span ng-bind="bucket.createdBy"></span> - <span ng-bind="bucket.title"></span> - <span ng-bind="bucket.description"></span> - <span ng-bind="bucket.createdAt"></span>.
+      </p>
+    </div>
+    <div class="form-group" ng-repeat="bucket in ourcompletedBuckets">
       <input type="checkbox" checked/>
       <p>
-        <span ng-bind="bucket.name"></span> - <span ng-bind="bucket.title"></span> - <span ng-bind="bucket.description"></span> - <span ng-bind="bucket.createdAt"></span>.
+        <span ng-bind="bucket.createdBy"></span> - <span ng-bind="bucket.title"></span> - <span ng-bind="bucket.description"></span> - <span ng-bind="bucket.createdAt"></span>.
       </p>
-
     </div>
-
   </form>
+  <h3>Pending</h3>
   <form role="form">
-    <div class="form-group" ng-repeat="bucket in pendingBuckets">
-      <input type="checkbox" checked/>
+    <div class="form-group" ng-repeat="bucket in otherpendingBuckets">
+      <input type="checkbox" disabled/>
       <p>
-        <span ng-bind="bucket.name"></span> - <span ng-bind="bucket.title"></span> - <span ng-bind="bucket.description"></span> - <span ng-bind="bucket.createdAt"></span>.
+        <span ng-bind="bucket.createdBy"></span> - <span ng-bind="bucket.title"></span> - <span ng-bind="bucket.description"></span> - <span ng-bind="bucket.createdAt"></span>.
+      </p>
+
+    </div>
+    <div class="form-group" ng-repeat="bucket in ourpendingBuckets">
+      <input type="checkbox"/>
+      <p>
+        <span ng-bind="bucket.createdBy"></span> - <span ng-bind="bucket.title"></span> - <span ng-bind="bucket.description"></span> - <span ng-bind="bucket.createdAt"></span>.
       </p>
 
     </div>
 
   </form>
 
-  <!-- <form role="form" class="form-inline">
-      <div class="form-group">
-        <label for="customername">Customer Name: </label>
-        <select name="customername" ng-model="newOrder.name" ng-options="customer.name for customer in customers">
-          <option ng-bind="customer.name"></option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="quantity">Order: </label>
-        <select name="quantity" ng-model="newOrder.quantity" ng-options="order for order in orderQuantity">
-          <option ng-bind="order"></option>
-        </select>
-      </div>
-      <div class="form-group">
-        <select name="items" ng-model="newOrder.product" ng-options="item.name for item in orderItems">
-          <option ng-bind="item.name"></option>
-        </select>
-      </div>
-      <button class="btn btn-success" ng-click="placeOrder()">Order</button>
-  </form>
-  <br />
-  <p class="orange" ng-if="message" ng-bind="message"></p>
-  <br />
-  <form class="right">
-    <input type="text" placeholder="search name..." ng-model="filter_order.name"/>
-  </form>
-  <br />
-  <table class="table table-striped table-bordered">
-    <thead>
-      <th>Name</th>
-      <th>Product</th>
-      <th>Quantity</th>
-      <th>Date</th>
-    </thead>
-    <tbody>
-      <tr ng-repeat="order in placedOrders | filter: filter_order">
-        <td ng-bind="order.name"></td>
-        <td ng-bind="order.product"></td>
-        <td ng-bind="order.quantity"></td>
-        <td ng-bind="order.createdAt"></td>
-      </tr>
 
-    </tbody>
-  </table> -->
 </div>

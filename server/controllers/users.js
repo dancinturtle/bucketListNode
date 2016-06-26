@@ -4,19 +4,16 @@ var User = mongoose.model('User');
 module.exports = (function(){
   return {
 
-  findUserforProfile: function(name, req,res){
-    User.find({name: name}, function(err, user){
+  findUserforProfile: function(req,res){
+    User.find({name: req.params.name}, function(err, user){
       if(err){
         console.log("Major error");
         res.json(err)
       }
       else {
         console.log("Here's what I got", user);
-      res.json(user);
+        res.json(user);
       }
-    })
-  	.populate('bucketlist').exec(function(err, user) {
-      res.render('user', {user: user});
     })
   },
 
